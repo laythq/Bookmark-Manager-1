@@ -4,10 +4,9 @@ describe Bookmark do
   describe '.all' do
     it 'returns all bookmarks' do
       bookmarks = Bookmark.all
-      expect(bookmarks).to include('www.google.co.uk')
-      expect(bookmarks).to include('www.theguardian.com')
-      expect(bookmarks).to include('www.twitter.com')
-      expect(bookmarks).to include('www.bbc.co.uk')
+      expect(bookmarks).to include('http://makersacademy.com')
+      expect(bookmarks).to include('http://google.com')
+      expect(bookmarks).to include('http://destroyallsoftware.com')
     end
   end
 end
