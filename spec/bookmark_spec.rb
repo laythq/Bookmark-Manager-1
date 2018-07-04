@@ -5,19 +5,19 @@ describe Bookmark do
     it 'returns all bookmarks' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
 
-      connection.exec("INSERT INTO bookmarks (url) VALUES ('http://google.com');")
+      connection.exec("INSERT INTO bookmarks (title, url) VALUES ('Google', 'http://google.com');")
 
 
       bookmarks = Bookmark.all
-      expect(bookmarks).to include('http://google.com')
+      expect(bookmarks).to include('Google')
     end
   end
 
   describe '.add' do
     it 'adds a new bookmark' do
-      Bookmark.add('http://makersacademy.com')
+      Bookmark.add('Makers Academy', 'http://makersacademy.com')
       bookmarks = Bookmark.all
-      expect(bookmarks).to include('http://makersacademy.com')
+      expect(bookmarks).to include('Makers Academy')
     end
   end
 end
