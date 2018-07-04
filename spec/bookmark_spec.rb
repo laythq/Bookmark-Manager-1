@@ -14,8 +14,10 @@ describe Bookmark do
   end
 
   describe '.add' do
-    Bookmark.add('http://makersacademy.com')
-    bookmarks = Bookmark.all
-    expect(bookmarks).to include('http://makersacademy.com')
+    it 'adds a new bookmark' do
+      Bookmark.add('http://makersacademy.com')
+      bookmarks = Bookmark.all
+      expect(bookmarks).to include('http://makersacademy.com')
+    end
   end
 end
