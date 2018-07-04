@@ -4,7 +4,7 @@ feature 'view bookmarks' do
 
     connection.exec("INSERT INTO bookmarks VALUES(1, 'http://google.com');")
 
-    visit('/bookmarks')
+    visit('/')
     expect(page).to have_content 'http://google.com'
   end
 end

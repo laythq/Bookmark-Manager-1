@@ -12,4 +12,10 @@ describe Bookmark do
       expect(bookmarks).to include('http://google.com')
     end
   end
+
+  describe '.add' do
+    Bookmark.add('http://makersacademy.com')
+    bookmarks = Bookmark.all
+    expect(bookmarks).to include('http://makersacademy.com')
+  end
 end
