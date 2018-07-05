@@ -3,21 +3,17 @@ require 'bookmark'
 describe Bookmark do
   describe '.all' do
     it 'returns all bookmarks' do
-      connection = PG.connect(dbname: 'bookmark_manager_test')
-
-      connection.exec("INSERT INTO bookmarks (title, url) VALUES ('Google', 'http://google.com');")
-
-
-      bookmarks = Bookmark.all
-      expect(bookmarks).to include({ title: "Google", url: "http://google.com" })
+      bookmark1 = Bookmark.add('Makers Academy', 'http://makersacademy.com')
+      bookmark2 = Bookmark.add('Google', 'http://google.com')
+      bookmarks = [bookmark1, bookmark2]
+      expect(Bookmark.all).to eq(bookmarks)
     end
   end
 
   describe '.add' do
     it 'adds a new bookmark' do
-      Bookmark.add('Makers Academy', 'http://makersacademy.com')
-      bookmarks = Bookmark.all
-      expect(bookmarks).to include({title: "Makers Academy", url: "http://makersacademy.com"})
+      bookmark = [Bookmark.add('Makers Academy', 'http://makersacademy.com')]
+      expect(Bookmark.all).to eq(bookmark)
     end
   end
 end
