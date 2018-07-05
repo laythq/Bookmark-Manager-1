@@ -9,7 +9,7 @@ describe Bookmark do
 
 
       bookmarks = Bookmark.all
-      expect(bookmarks).to include('Google')
+      expect(bookmarks).to include({ title: "Google", url: "http://google.com" })
     end
   end
 
@@ -17,7 +17,7 @@ describe Bookmark do
     it 'adds a new bookmark' do
       Bookmark.add('Makers Academy', 'http://makersacademy.com')
       bookmarks = Bookmark.all
-      expect(bookmarks).to include('Makers Academy')
+      expect(bookmarks).to include({title: "Makers Academy", url: "http://makersacademy.com"})
     end
   end
 end
