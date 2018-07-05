@@ -37,6 +37,25 @@ class Bookmark
     url =~ /\A#{URI::regexp(['http', 'https'])}\z/
   end
 
+  def self.delete(id)
+    if ENV['RACK_ENV'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+    connection.exec("DELETE FROM bookmarks WHERE id='#{id}';")
+  end
+
+  def self.update(id, title, url)
+    if ENV['RACK_ENV'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+    bookmark = connection.exec("UPDATE bookmarks SET title='#{title}', url='#{url}' WHERE id='#{id}' RETURNING id, url, title;")
+    Bookmark.new(bookmark.first['id'], bookmark.first['url'], bookmark.first['title'])
+  end
+
   def ==(bookmark)
     @id == bookmark.id
   end

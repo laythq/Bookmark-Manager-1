@@ -3,13 +3,17 @@ require 'sinatra/flash'
 require './lib/bookmark'
 
 class BookmarkManager < Sinatra::Base
-  enable :sessions
-  register Sinatra::Flash
+  set :method_override, true
 
   get '/' do
     @url_invalid = params[:url_invalid]
     @bookmarks = Bookmark.all
     erb :index
+  end
+
+  get '/bookmarks/update' do
+    @bookmark = params[:id]
+    erb :update
   end
 
   post '/bookmarks' do
@@ -19,6 +23,16 @@ class BookmarkManager < Sinatra::Base
     else
       redirect '/?url_invalid=true'
     end
+  end
+
+  delete '/bookmarks/:id' do
+    Bookmark.delete(params[:id])
+    redirect '/'
+  end
+
+  patch '/bookmarks/:id' do
+    Bookmark.update(params[:id], params[:title], params[:url])
+    redirect '/'
   end
 
   run! if app_file == $PROGRAM_NAME

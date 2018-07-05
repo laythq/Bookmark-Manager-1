@@ -16,4 +16,20 @@ describe Bookmark do
       expect(Bookmark.all).to eq(bookmark)
     end
   end
+
+  describe '.delete' do
+    it 'removes a bookmark from database' do
+      bookmark = Bookmark.add('Makers Academy', 'http://makersacademy.com')
+      Bookmark.delete(bookmark.id)
+      expect(Bookmark.all).not_to include(bookmark)
+    end
+  end
+
+  describe '.update' do
+    it 'changes the bookmark attributes' do
+      bookmark = Bookmark.add('Makers Academy', 'http://makersacademy.com')
+      new_bookmark = Bookmark.update(bookmark.id, 'General Assembly', 'http://generalassembly.com')
+      expect(Bookmark.all).to eq([new_bookmark])
+    end
+  end
 end
