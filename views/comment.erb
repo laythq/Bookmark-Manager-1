@@ -1,0 +1,7 @@
+<h1> Add a comment </h1>
+
+<form action="/bookmarks/<%= @bookmark %>/comment" method = 'POST'>
+  <input type='hidden' name='_method' value='PATCH'>
+    Comment: <input type='text' name='comment'>
+    <input type='submit' value='Submit'>
+  </form>

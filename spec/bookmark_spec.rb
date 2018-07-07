@@ -1,5 +1,6 @@
 require 'bookmark'
 
+
 describe Bookmark do
   describe '.all' do
     it 'returns all bookmarks' do
@@ -30,6 +31,16 @@ describe Bookmark do
       bookmark = Bookmark.add('Makers Academy', 'http://makersacademy.com')
       new_bookmark = Bookmark.update(bookmark.id, 'General Assembly', 'http://generalassembly.com')
       expect(Bookmark.all).to eq([new_bookmark])
+    end
+  end
+
+  describe '#retrieve_comment' do
+    it 'retrieves comments for that bookmark' do
+      bookmark = Bookmark.add('Makers Academy', 'http://makersacademy.com')
+      comment = 'comment'
+      new_comment = Comment.add(bookmark.id, comment)
+      expect(Bookmark.retrieve(bookmark.id)).to eq [new_comment.comment]
+
     end
   end
 end

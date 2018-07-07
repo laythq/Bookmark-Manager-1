@@ -1,6 +1,6 @@
 <h1> Update your bookmark </h1>
 
-<form action="/bookmarks/<%= @bookmark %>" method = 'POST'>
+<form action="/bookmarks/<%= @bookmark %>/update" method = 'POST'>
   <input type='hidden' name='_method' value='PATCH'>
     title<input type='text' name='title'>
     url<input type='text' name='url'>
