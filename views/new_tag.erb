@@ -1,0 +1,7 @@
+<h1> Add a tag </h1>
+
+<form action="/bookmarks/<%= @bookmark %>/tags" method = 'POST'>
+  <input type='hidden' name='_method' value='POST'>
+    Tag: <input type='text' name='tag'>
+    <input type='submit' value='Add Tag'>
+  </form>

@@ -1,4 +1,6 @@
 require 'bookmark'
+require 'tag'
+require 'tag-junction'
 
 
 describe Bookmark do
@@ -40,7 +42,15 @@ describe Bookmark do
       comment = 'comment'
       new_comment = Comment.add(bookmark.id, comment)
       expect(Bookmark.retrieve(bookmark.id)).to eq [new_comment.comment]
-
     end
   end
+
+    describe '#wrap_bookmark(bookmark_id)' do
+      it 'wraps an existing tag' do
+        bookmark = Bookmark.add('Facebook', 'http://www.facebook.com')
+        expect(Bookmark.wrap_bookmark(bookmark.id)).to eq bookmark
+      end
+    end
+
+
 end

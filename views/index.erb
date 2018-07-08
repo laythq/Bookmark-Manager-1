@@ -1,9 +1,16 @@
 <ul>
+  <form action="/bookmarks/filter-bookmarks" method='GET'>
+     <input type='hidden' name='_method' value='GET'>
+     <input type='submit' value='Filter Bookmarks'>
+  </form>
  <% @bookmarks.each do |bookmark| %>
  <a href="<%= bookmark.url %>"> <%= bookmark.title %></a>
      <li>
-          <% Bookmark.retrieve(bookmark.id).each do |comment| %>
+          Comments: <% Bookmark.retrieve(bookmark.id).each do |comment| %>
           <%= comment %>
+          <% end %>
+          Tags: <% TagJunction.return_tags(bookmark).each do |tag| %>
+          <%= tag.tag %>
           <% end %>
        <form action="/bookmarks/<%= bookmark.id %>" method='POST'>
           <input type='hidden' name='_method' value='DELETE'>
@@ -17,6 +24,10 @@
            <input type='hidden' name='id' value='<%= bookmark.id %>'>
            <input type='submit' value='Add comment'>
          </form>
+         <form action="/bookmarks/tags" method='GET'>
+            <input type='hidden' name='id' value='<%= bookmark.id %>'>
+            <input type='submit' value='Add Tag'>
+          </form>
     </li>
  <% end %>
 </ul>

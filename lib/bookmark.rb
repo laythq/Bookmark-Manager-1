@@ -66,6 +66,17 @@ class Bookmark
     comments.map { |comment| comment.comment }
   end
 
+  def self.wrap_bookmark(bookmark_id)
+    if ENV['RACK_ENV'] == 'test'
+      connection = PG.connect(dbname: 'bookmark_manager_test')
+    else
+      connection = PG.connect(dbname: 'bookmark_manager')
+    end
+
+    bookmark = connection.exec("SELECT * FROM bookmarks WHERE id='#{bookmark_id}';")
+    Bookmark.new(bookmark.first['id'], bookmark.first['url'], bookmark.first['title'])
+  end
+
   def ==(bookmark)
     @id == bookmark.id
   end
