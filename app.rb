@@ -2,11 +2,14 @@ require 'sinatra/base'
 require './lib/bookmark'
 require './lib/comment'
 require './lib/tag-junction'
+require './lib/user'
 
 class BookmarkManager < Sinatra::Base
   set :method_override, true
+  enable :sessions
 
   get '/' do
+    @user = User.find(session[:id])
     @url_invalid = params[:url_invalid]
     @bookmarks = Bookmark.all
     erb :index
@@ -29,6 +32,14 @@ class BookmarkManager < Sinatra::Base
 
   get '/bookmarks/filter-bookmarks' do
     erb :filter_by_bookmarks
+  end
+
+  get '/users/new' do
+    erb :new_user
+  end
+
+  get '/sessions/new' do
+    erb :new_session
   end
 
   post '/bookmarks' do
@@ -72,6 +83,28 @@ class BookmarkManager < Sinatra::Base
     p tag = Tag.wrap_tag(params[:tag])
     p @bookmarks = TagJunction.return_bookmarks(tag)
     erb :show_filtered
+  end
+
+  post '/users' do
+    user = User.create(email: params[:email], password: params[:password])
+    session[:id] = user.id
+    redirect '/'
+  end
+
+  post '/sessions' do
+    user = User.authenticate(params[:email], params[:password])
+
+    if user
+      session[:id] = user.id
+      redirect '/'
+    else
+      redirect '/sessions/new'
+    end
+  end
+
+  post '/sessions/destroy' do
+    session.clear
+    redirect '/'
   end
 
   run! if app_file == $PROGRAM_NAME
